@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:new_cvsender/services/notification_services.dart';
 import 'package:new_cvsender/services/theme_sevices.dart';
 
@@ -10,11 +11,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final NotifyHelper service;
+  late final LocalNotificationService service;
 
   @override
   void initState() {
-    service = NotifyHelper();
+    service = LocalNotificationService();
     service.intialize();
     // listenToNotification();
     super.initState();
@@ -41,7 +42,11 @@ class _HomePageState extends State<HomePage> {
         onTap: () async {
           ThemeServices().switchTheme();
           await service.showNotification(
-              id: 0, title: 'some tt', body: 'some body');
+              id: 0,
+              title: 'theme change',
+              body: Get.isDarkMode
+                  ? 'Activated Light Mode'
+                  : 'Activated Dark Mode');
         },
         child: const Icon(
           Icons.nightlight_round,
