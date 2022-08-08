@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:new_cvsender/services/notification_services.dart';
+import 'package:new_cvsender/services/theme_sevices.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -8,6 +10,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final NotifyHelper service;
+
+  @override
+  void initState() {
+    service = NotifyHelper();
+    service.intialize();
+    // listenToNotification();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +38,10 @@ class _HomePageState extends State<HomePage> {
   _appBar() {
     return AppBar(
       leading: GestureDetector(
-        onTap: () {
-          print("Tapped");
+        onTap: () async {
+          ThemeServices().switchTheme();
+          await service.showNotification(
+              id: 0, title: 'some tt', body: 'some body');
         },
         child: const Icon(
           Icons.nightlight_round,
