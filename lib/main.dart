@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_cvsender/ui/home_page.dart';
-import 'package:new_cvsender/ui/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: Themes.light,
-      darkTheme: Themes.dark,
-      themeMode: ThemeMode.dark,
+      // themeMode: ThemeMode.dark,
+      theme:
+          ThemeData(primaryColor: Colors.amber, brightness: Brightness.light),
+      // darkTheme: ThemeData(
+      //     primaryColor: Colors.blueGrey.shade200, brightness: Brightness.dark),
       home: const HomePage(),
     );
   }
