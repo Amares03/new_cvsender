@@ -41,6 +41,7 @@ dependencies:
   flutter_local_notifications:
   flutter_native_timezone:
   rxdart:
+  date_picker_timeline:
 
 dev_dependencies:
   flutter_test:
