@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:new_cvsender/services/notification_services.dart';
 import 'package:new_cvsender/services/theme_sevices.dart';
 import 'package:new_cvsender/ui/theme.dart';
+import 'package:new_cvsender/ui/widget/button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -46,7 +47,8 @@ class _HomePageState extends State<HomePage> {
                     )
                   ],
                 ),
-              )
+              ),
+              MyButton(lable: "+ Add Task", onTap: () => null),
             ],
           )
         ],
