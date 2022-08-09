@@ -47,6 +47,8 @@ class _HomePageState extends State<HomePage> {
               body: Get.isDarkMode
                   ? 'Activated Light Mode'
                   : 'Activated Dark Mode');
+          await service.showScheduledNotification(
+              id: 1, title: "after", body: "some seconds", seconds: 5);
         },
         child: const Icon(
           Icons.nightlight_round,

@@ -93,11 +93,11 @@ class LocalNotificationService {
 
   void onDidReceiveLocalNotification(
       int id, String? title, String? body, String? payload) {
-    print('id $id');
+    // print('id $id');
   }
 
   void onSelectNotification(String? payload) {
-    print('payload $payload');
+    // print('payload $payload');
     if (payload != null && payload.isNotEmpty) {
       onNotificationClick.add(payload);
     }
