@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:new_cvsender/services/notification_services.dart';
 import 'package:new_cvsender/services/theme_sevices.dart';
+import 'package:new_cvsender/ui/theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,10 +28,26 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: _appBar(),
       body: Column(
-        children: const [
-          Text(
-            "Team data",
-            style: TextStyle(fontSize: 40),
+        children: [
+          Row(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      DateFormat.yMMMMd().format(DateTime.now()),
+                      style: subHeadingStyle,
+                    ),
+                    Text(
+                      "Today",
+                      style: headingStyle,
+                    )
+                  ],
+                ),
+              )
+            ],
           )
         ],
       ),
@@ -38,27 +56,29 @@ class _HomePageState extends State<HomePage> {
 
   _appBar() {
     return AppBar(
+      elevation: 0,
+      backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () async {
           ThemeServices().switchTheme();
           await service.showNotification(
-              id: 0,
               title: 'theme change',
               body: Get.isDarkMode
                   ? 'Activated Light Mode'
                   : 'Activated Dark Mode');
-          await service.showScheduledNotification(
-              id: 1, title: "after", body: "some seconds", seconds: 5);
+          // await service.showScheduledNotification(
+          //     id: 1, title: "after", body: "some seconds", seconds: 5);
         },
-        child: const Icon(
-          Icons.nightlight_round,
+        child: Icon(
+          Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round,
           size: 20,
+          color: Get.isDarkMode ? Colors.white : Colors.black,
         ),
       ),
       actions: const [
-        Icon(
-          Icons.person,
-          size: 20,
+        CircleAvatar(
+          backgroundImage: AssetImage("assets/images/profile.png"),
+          backgroundColor: Colors.white,
         ),
         SizedBox(
           width: 20,
