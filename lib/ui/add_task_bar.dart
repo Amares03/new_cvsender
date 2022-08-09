@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:new_cvsender/ui/theme.dart';
 import 'package:new_cvsender/ui/widget/input_field.dart';
 
-class AddTaskPage extends StatelessWidget {
+class AddTaskPage extends StatefulWidget {
   const AddTaskPage({Key? key}) : super(key: key);
 
+  @override
+  State<AddTaskPage> createState() => _AddTaskPageState();
+}
+
+class _AddTaskPageState extends State<AddTaskPage> {
+  DateTime _selectedDate = DateTime.now();
+  final String _endTime = "09:30 PM";
+  final String _startTime =
+      DateFormat('hh:mm a').format(DateTime.now()).toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +31,54 @@ class AddTaskPage extends StatelessWidget {
                 "Add Task",
                 style: headingStyle,
               ),
-              const MyInputField(title: "Title", hint: "Enter Your Title"),
+              const MyInputField(title: "Title", hint: "Enter title here"),
+              const MyInputField(title: "Note", hint: "Enter note here"),
+              MyInputField(
+                title: "Date",
+                hint: DateFormat.yMd().format(_selectedDate),
+                widget: IconButton(
+                  onPressed: () {
+                    _getDateFromUser();
+                  },
+                  icon: Icon(
+                    Icons.calendar_today_outlined,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: MyInputField(
+                      title: "Start Time",
+                      hint: _startTime,
+                      widget: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                    child: MyInputField(
+                      title: "End Time",
+                      hint: _endTime,
+                      widget: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
@@ -53,5 +110,19 @@ class AddTaskPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _getDateFromUser() async {
+    DateTime? pickerDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2015),
+        lastDate: DateTime(2121));
+
+    if (pickerDate != null) {
+      setState(() {
+        _selectedDate = pickerDate;
+      });
+    } else {}
   }
 }
