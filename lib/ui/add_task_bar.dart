@@ -98,7 +98,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   items: remindList.map<DropdownMenuItem<String>>((int value) {
                     return DropdownMenuItem<String>(
                       value: value.toString(),
-                      child: Text(value.toString()),
+                      child: Text(
+                        value.toString(),
+                        style: const TextStyle(color: Colors.grey),
+                      ),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
@@ -126,7 +129,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       repeatList.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Text(value),
+                      child: Text(
+                        value,
+                        style: const TextStyle(color: Colors.grey),
+                      ),
                     );
                   }).toList(),
                   onChanged: (String? newValue) {
