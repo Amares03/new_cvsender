@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:new_cvsender/services/notification_services.dart';
 import 'package:new_cvsender/services/theme_sevices.dart';
+import 'package:new_cvsender/ui/add_task_bar.dart';
 import 'package:new_cvsender/ui/theme.dart';
 import 'package:new_cvsender/ui/widget/button.dart';
 
@@ -88,7 +89,8 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          MyButton(lable: "+ Add Task", onTap: () => null),
+          MyButton(
+              lable: "+ Add Task", onTap: () => Get.to(const AddTaskPage())),
         ],
       ),
     );
