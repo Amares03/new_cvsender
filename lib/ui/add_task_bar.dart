@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:new_cvsender/ui/theme.dart';
+import 'package:new_cvsender/ui/widget/button.dart';
 import 'package:new_cvsender/ui/widget/input_field.dart';
 
 class AddTaskPage extends StatefulWidget {
@@ -24,6 +25,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   ];
   String _selectedRepeat = "None";
   List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
+
+  int _selectedColor = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,10 +155,65 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 18,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _colorPallete(),
+                  MyButton(lable: "create Task", onTap: () => null),
+                ],
+              )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  _colorPallete() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Color",
+          style: titleStyle,
+        ),
+        const SizedBox(
+          height: 8.0,
+        ),
+        Wrap(
+          children: List<Widget>.generate(3, (int index) {
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedColor = index;
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: CircleAvatar(
+                  radius: 14,
+                  backgroundColor: index == 0
+                      ? primaryClr
+                      : index == 1
+                          ? pinkClr
+                          : yellowClr,
+                  child: _selectedColor == index
+                      ? const Icon(
+                          Icons.done,
+                          // color: Colors.white,
+                          size: 16,
+                        )
+                      : Container(),
+                ),
+              ),
+            );
+          }),
+        )
+      ],
     );
   }
 
