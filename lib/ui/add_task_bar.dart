@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:new_cvsender/controller/task_controller.dart';
+import 'package:new_cvsender/models/task.dart';
 import 'package:new_cvsender/ui/theme.dart';
 import 'package:new_cvsender/ui/widget/button.dart';
 import 'package:new_cvsender/ui/widget/input_field.dart';
@@ -13,6 +15,7 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  final TaskController _taskController = Get.put(TaskController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
 
@@ -186,6 +189,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   _validateData() {
     if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
+      // add to database
+      _addTaskToDb();
+
       Get.back();
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
       Get.snackbar("Required", "All fields are required!!",
@@ -197,6 +203,22 @@ class _AddTaskPageState extends State<AddTaskPage> {
             color: Colors.red.shade900,
           ));
     }
+  }
+
+  _addTaskToDb() async {
+    int value = await _taskController.addTask(
+        task: Task(
+            note: _noteController.text,
+            title: _titleController.text,
+            date: DateFormat.yMd().format(_selectedDate),
+            startTime: _startTime,
+            endTime: _endTime,
+            color: _selectedColor,
+            remind: _selectedRemind,
+            repeat: _selectedRepeat,
+            isCompleted: 0));
+
+    print("my Id number is $value");
   }
 
   _colorPallete() {

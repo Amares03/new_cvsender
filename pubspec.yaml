@@ -42,6 +42,7 @@ dependencies:
   flutter_native_timezone:
   rxdart:
   date_picker_timeline:
+  sqflite:
 
 dev_dependencies:
   flutter_test:
