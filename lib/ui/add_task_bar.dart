@@ -13,6 +13,9 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
+
   DateTime _selectedDate = DateTime.now();
   String _endTime = "09:30 PM";
   String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
@@ -42,8 +45,16 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 "Add Task",
                 style: headingStyle,
               ),
-              const MyInputField(title: "Title", hint: "Enter title here"),
-              const MyInputField(title: "Note", hint: "Enter note here"),
+              MyInputField(
+                title: "Title",
+                hint: "Enter title here",
+                controller: _titleController,
+              ),
+              MyInputField(
+                title: "Note",
+                hint: "Enter note here",
+                controller: _noteController,
+              ),
               MyInputField(
                 title: "Date",
                 hint: DateFormat.yMd().format(_selectedDate),
@@ -163,7 +174,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _colorPallete(),
-                  MyButton(lable: "create Task", onTap: () => null),
+                  MyButton(lable: "create Task", onTap: () => _validateData()),
                 ],
               )
             ],
@@ -171,6 +182,21 @@ class _AddTaskPageState extends State<AddTaskPage> {
         ),
       ),
     );
+  }
+
+  _validateData() {
+    if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
+      Get.back();
+    } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
+      Get.snackbar("Required", "All fields are required!!",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.white,
+          colorText: pinkClr,
+          icon: Icon(
+            Icons.warning_amber_rounded,
+            color: Colors.red.shade900,
+          ));
+    }
   }
 
   _colorPallete() {
