@@ -60,6 +60,14 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: ((context, index) {
           Task task = _taskController.taskList[index];
           if (task.repeat == 'Daily') {
+            DateTime date = DateFormat.jm().parse(task.startTime.toString());
+            var myTime = DateFormat('HH:mm').format(date);
+            service.showScheduledNotification(
+                id: task.id!,
+                title: task.title!,
+                body: task.note!,
+                minutes: int.parse(myTime.toString().split(":")[1]),
+                hours: int.parse(myTime.toString().split(":")[0]));
             return AnimationConfiguration.staggeredList(
               position: index,
               child: SlideAnimation(

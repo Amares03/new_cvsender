@@ -60,25 +60,33 @@ class LocalNotificationService {
     await _localNotificationService.show(0, title, body, details);
   }
 
-  Future<void> showScheduledNotification(
-      {required int id,
-      required String title,
-      required String body,
-      required int seconds}) async {
+  Future<void> showScheduledNotification({
+    required int id,
+    required String title,
+    required String body,
+    required int minutes,
+    required int hours,
+  }) async {
     final details = await _notificationDetails();
     await _localNotificationService.zonedSchedule(
       id,
       title,
       body,
-      tz.TZDateTime.from(
-        DateTime.now().add(Duration(seconds: seconds)),
-        tz.local,
-      ),
+      // tz.TZDateTime.from(
+      //   DateTime.now().add(Duration(minutes: minutes, hours: hours)),
+      //   tz.local,
+      // ),
+      _convertTime(hours, minutes),
       details,
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
+  }
+
+  tz.TZDateTime _convertTime(int hour, int minutes) {
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    return tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
   }
 
   Future<void> showNotificationWithPayload(
