@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
+// ignore: unused_import
+import 'package:get/get.dart';
 import 'package:new_cvsender/ui/theme.dart';
 
 class BottomSheetButton extends StatelessWidget {
-  final Function onTap;
+  final VoidCallback onTap;
   final Color bColor;
   final String text;
   final bool? isColor;
+  final BuildContext context;
 
   const BottomSheetButton(
       {Key? key,
       required this.onTap,
       required this.bColor,
       required this.text,
-      this.isColor})
+      this.isColor,
+      required this.context})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(
           vertical: 4,

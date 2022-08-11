@@ -107,17 +107,20 @@ class _HomePageState extends State<HomePage> {
                     task.isCompleted = 1;
                     Get.back();
                   },
+                  context: context,
                 ),
           const SizedBox(
             height: 10.0,
           ),
           BottomSheetButton(
-            bColor: Colors.amber,
+            bColor: Colors.red.shade300,
             text: "Delete Task",
             onTap: () {
-              Navigator.of(context).pop();
               _taskController.delete(task);
+              _taskController.getTasks();
+              Get.back();
             },
+            context: context,
           ),
           const Spacer(),
           BottomSheetButton(
@@ -127,6 +130,7 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Get.back();
             },
+            context: context,
           ),
         ],
       ),
