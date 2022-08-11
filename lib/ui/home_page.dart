@@ -1,14 +1,18 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:new_cvsender/controller/task_controller.dart';
+import 'package:new_cvsender/models/task.dart';
 import 'package:new_cvsender/services/notification_services.dart';
 import 'package:new_cvsender/services/theme_sevices.dart';
 import 'package:new_cvsender/ui/add_task_bar.dart';
 import 'package:new_cvsender/ui/theme.dart';
+import 'package:new_cvsender/ui/widget/bottom_sheet_button.dart';
 import 'package:new_cvsender/ui/widget/button.dart';
+import 'package:new_cvsender/ui/widget/task_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -54,21 +58,60 @@ class _HomePageState extends State<HomePage> {
       return ListView.builder(
           itemCount: _taskController.taskList.length,
           itemBuilder: ((context, index) {
-            return GestureDetector(
-              onTap: () {
-                _taskController.delete(_taskController.taskList[index]);
-                _taskController.getTasks();
-              },
-              child: Container(
-                height: 50,
-                width: 100,
-                color: Colors.blueGrey,
-                margin: const EdgeInsets.only(bottom: 10),
-                child: Text(_taskController.taskList[index].title.toString()),
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              child: SlideAnimation(
+                child: FadeInAnimation(
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _showBottomSheet(
+                              context, _taskController.taskList[index]);
+                        },
+                        child: TaskTile(_taskController.taskList[index]),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             );
           }));
     }));
+  }
+
+  _showBottomSheet(BuildContext context, Task task) {
+    Get.bottomSheet(Container(
+      padding: const EdgeInsets.only(top: 4),
+      height: task.isCompleted == 1
+          ? MediaQuery.of(context).size.height * 0.24
+          : MediaQuery.of(context).size.height * 0.32,
+      color: Get.isDarkMode ? darkGryClr : Colors.white,
+      child: Column(
+        children: [
+          Container(
+            height: 6,
+            width: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300],
+            ),
+          ),
+          const Spacer(),
+          const BottomSheetButton(bColor: primaryClr, text: "Task Completed"),
+          const SizedBox(
+            height: 10.0,
+          ),
+          const BottomSheetButton(bColor: Colors.amber, text: "Delete Task"),
+          const Spacer(),
+          const BottomSheetButton(
+            bColor: Colors.white,
+            text: "Close",
+            isColor: true,
+          ),
+        ],
+      ),
+    ));
   }
 
   _addDateBar() {
