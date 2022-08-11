@@ -84,8 +84,8 @@ class _HomePageState extends State<HomePage> {
     Get.bottomSheet(Container(
       padding: const EdgeInsets.only(top: 4),
       height: task.isCompleted == 1
-          ? MediaQuery.of(context).size.height * 0.24
-          : MediaQuery.of(context).size.height * 0.32,
+          ? MediaQuery.of(context).size.height * 0.27
+          : MediaQuery.of(context).size.height * 0.35,
       color: Get.isDarkMode ? darkGryClr : Colors.white,
       child: Column(
         children: [
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                   text: "Task Completed",
                   onTap: () {
                     _taskController.updateTask(task.id!);
-                    _taskController.getTasks();
+
                     Get.back();
                   },
                   context: context,
@@ -118,14 +118,14 @@ class _HomePageState extends State<HomePage> {
             text: "Delete Task",
             onTap: () {
               _taskController.delete(task);
-              _taskController.getTasks();
+
               Get.back();
             },
             context: context,
           ),
           const Spacer(),
           BottomSheetButton(
-            bColor: Colors.white,
+            bColor: Colors.transparent,
             text: "Close",
             isColor: true,
             onTap: () {

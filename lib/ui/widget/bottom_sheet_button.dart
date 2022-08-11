@@ -38,8 +38,9 @@ class BottomSheetButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: titleStyle.copyWith(
-                color: isColor == null ? Colors.white : Colors.black),
+            style: isColor == null
+                ? titleStyle.copyWith(color: Colors.white)
+                : titleStyle,
           ),
         ),
       ),
