@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:new_cvsender/ui/theme.dart';
 
 class BottomSheetButton extends StatelessWidget {
-  final Function? onTap;
+  final Function onTap;
   final Color bColor;
   final String text;
   final bool? isColor;
 
   const BottomSheetButton(
       {Key? key,
-      this.onTap,
+      required this.onTap,
       required this.bColor,
       required this.text,
       this.isColor})

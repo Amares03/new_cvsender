@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     service = LocalNotificationService();
     service.intialize();
-    // listenToNotification();
+    _taskController.getTasks();
     super.initState();
   }
 
@@ -98,16 +98,35 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const Spacer(),
-          const BottomSheetButton(bColor: primaryClr, text: "Task Completed"),
+          task.isCompleted == 1
+              ? Container()
+              : BottomSheetButton(
+                  bColor: primaryClr,
+                  text: "Task Completed",
+                  onTap: () {
+                    task.isCompleted = 1;
+                    Get.back();
+                  },
+                ),
           const SizedBox(
             height: 10.0,
           ),
-          const BottomSheetButton(bColor: Colors.amber, text: "Delete Task"),
+          BottomSheetButton(
+            bColor: Colors.amber,
+            text: "Delete Task",
+            onTap: () {
+              Navigator.of(context).pop();
+              _taskController.delete(task);
+            },
+          ),
           const Spacer(),
-          const BottomSheetButton(
+          BottomSheetButton(
             bColor: Colors.white,
             text: "Close",
             isColor: true,
+            onTap: () {
+              Get.back();
+            },
           ),
         ],
       ),
