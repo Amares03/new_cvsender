@@ -1,8 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:get/get.dart';
+import 'package:new_cvsender/ui/notified_page.dart';
 import "package:timezone/data/latest.dart" as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:timezone/timezone.dart' as tz;
+
+import '../ui/theme.dart';
 
 class LocalNotificationService {
   LocalNotificationService();
@@ -59,7 +64,8 @@ class LocalNotificationService {
     required String body,
   }) async {
     final details = await _notificationDetails();
-    await _localNotificationService.show(0, title, body, details);
+    await _localNotificationService.show(0, title, body, details,
+        payload: title);
   }
 
   Future<void> showScheduledNotification({
@@ -71,19 +77,21 @@ class LocalNotificationService {
   }) async {
     final details = await _notificationDetails();
     await _localNotificationService.zonedSchedule(
-        id,
-        title,
-        body,
-        // tz.TZDateTime.from(
-        //   DateTime.now().add(Duration(minutes: minutes, hours: hours)),
-        //   tz.local,
-        // ),
-        _convertTime(hours, minutes),
-        details,
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time);
+      id,
+      title,
+      body,
+      // tz.TZDateTime.from(
+      //   DateTime.now().add(Duration(minutes: minutes, hours: hours)),
+      //   tz.local,
+      // ),
+      _convertTime(hours, minutes),
+      details,
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+      payload: "$title|$body|",
+    );
   }
 
   tz.TZDateTime _convertTime(int hour, int minutes) {
@@ -122,6 +130,20 @@ class LocalNotificationService {
     // print('payload $payload');
     if (payload != null && payload.isNotEmpty) {
       onNotificationClick.add(payload);
+    }
+    if (payload == 'theme change') {
+      Get.snackbar(payload.toString(), "The Theme has been Changed",
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.white,
+          colorText: pinkClr,
+          icon: Icon(
+            Icons.warning_amber_rounded,
+            color: Colors.red.shade900,
+          ));
+    } else {
+      Get.to(() => NotifiedPage(
+            lable: payload,
+          ));
     }
   }
 }
