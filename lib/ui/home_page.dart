@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: ((context, index) {
           Task task = _taskController.taskList[index];
           if (task.repeat == 'Daily') {
-            DateTime date = DateFormat.jm().parse(task.startTime.toString());
+            DateTime date = DateFormat.Hm().parse(task.startTime.toString());
             var myTime = DateFormat('HH:mm').format(date);
             service.showScheduledNotification(
                 id: task.id!,

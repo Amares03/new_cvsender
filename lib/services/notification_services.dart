@@ -1,3 +1,4 @@
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import "package:timezone/data/latest.dart" as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/subjects.dart';
@@ -5,13 +6,14 @@ import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationService {
   LocalNotificationService();
+  // ignore: unused_element
 
   final _localNotificationService = FlutterLocalNotificationsPlugin();
 
   final BehaviorSubject<String?> onNotificationClick = BehaviorSubject();
 
   Future<void> intialize() async {
-    tz.initializeTimeZones();
+    _configureLocalTimeZone();
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('@drawable/ic_stat_beach_access');
 
@@ -69,24 +71,36 @@ class LocalNotificationService {
   }) async {
     final details = await _notificationDetails();
     await _localNotificationService.zonedSchedule(
-      id,
-      title,
-      body,
-      // tz.TZDateTime.from(
-      //   DateTime.now().add(Duration(minutes: minutes, hours: hours)),
-      //   tz.local,
-      // ),
-      _convertTime(hours, minutes),
-      details,
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-    );
+        id,
+        title,
+        body,
+        // tz.TZDateTime.from(
+        //   DateTime.now().add(Duration(minutes: minutes, hours: hours)),
+        //   tz.local,
+        // ),
+        _convertTime(hours, minutes),
+        details,
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
   }
 
   tz.TZDateTime _convertTime(int hour, int minutes) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    return tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
+    tz.TZDateTime scheduleDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
+
+    if (scheduleDate.isBefore(now)) {
+      scheduleDate = scheduleDate.add(const Duration(days: 1));
+    }
+    return scheduleDate;
+  }
+
+  Future<void> _configureLocalTimeZone() async {
+    tz.initializeTimeZones();
+    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZone));
   }
 
   Future<void> showNotificationWithPayload(
