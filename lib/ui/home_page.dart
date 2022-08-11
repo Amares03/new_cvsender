@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:new_cvsender/controller/task_controller.dart';
 import 'package:new_cvsender/services/notification_services.dart';
 import 'package:new_cvsender/services/theme_sevices.dart';
 import 'package:new_cvsender/ui/add_task_bar.dart';
@@ -18,6 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final LocalNotificationService service;
+  final _taskController = Get.put(TaskController());
+  // ignore: unused_field
   DateTime _selectedDate = DateTime.now();
 
   @override
@@ -37,9 +40,35 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          const SizedBox(
+            height: 15,
+          ),
+          _showTasks(),
         ],
       ),
     );
+  }
+
+  _showTasks() {
+    return Expanded(child: Obx(() {
+      return ListView.builder(
+          itemCount: _taskController.taskList.length,
+          itemBuilder: ((context, index) {
+            return GestureDetector(
+              onTap: () {
+                _taskController.delete(_taskController.taskList[index]);
+                _taskController.getTasks();
+              },
+              child: Container(
+                height: 50,
+                width: 100,
+                color: Colors.blueGrey,
+                margin: const EdgeInsets.only(bottom: 10),
+                child: Text(_taskController.taskList[index].title.toString()),
+              ),
+            );
+          }));
+    }));
   }
 
   _addDateBar() {
@@ -91,8 +120,12 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           MyButton(
-              lable: "+ Add Task",
-              onTap: () => Get.to(() => const AddTaskPage())),
+            lable: "+ Add Task",
+            onTap: () async {
+              await Get.to(() => const AddTaskPage());
+              _taskController.getTasks();
+            },
+          ),
         ],
       ),
     );
