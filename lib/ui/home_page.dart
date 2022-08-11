@@ -104,7 +104,8 @@ class _HomePageState extends State<HomePage> {
                   bColor: primaryClr,
                   text: "Task Completed",
                   onTap: () {
-                    task.isCompleted = 1;
+                    _taskController.updateTask(task.id!);
+                    _taskController.getTasks();
                     Get.back();
                   },
                   context: context,
