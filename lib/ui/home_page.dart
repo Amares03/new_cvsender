@@ -56,8 +56,10 @@ class _HomePageState extends State<HomePage> {
   _showTasks() {
     return Expanded(child: Obx(() {
       return ListView.builder(
-          itemCount: _taskController.taskList.length,
-          itemBuilder: ((context, index) {
+        itemCount: _taskController.taskList.length,
+        itemBuilder: ((context, index) {
+          Task task = _taskController.taskList[index];
+          if (task.repeat == 'Daily') {
             return AnimationConfiguration.staggeredList(
               position: index,
               child: SlideAnimation(
@@ -66,17 +68,39 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          _showBottomSheet(
-                              context, _taskController.taskList[index]);
+                          _showBottomSheet(context, task);
                         },
-                        child: TaskTile(_taskController.taskList[index]),
+                        child: TaskTile(task),
                       ),
                     ],
                   ),
                 ),
               ),
             );
-          }));
+          }
+          if (task.date == DateFormat.yMd().format(_selectedDate)) {
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              child: SlideAnimation(
+                child: FadeInAnimation(
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _showBottomSheet(context, task);
+                        },
+                        child: TaskTile(task),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return Container();
+          }
+        }),
+      );
     }));
   }
 
@@ -161,7 +185,9 @@ class _HomePageState extends State<HomePage> {
               fontSize: 14, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         onDateChange: (date) {
-          _selectedDate = date;
+          setState(() {
+            _selectedDate = date;
+          });
         },
       ),
     );
