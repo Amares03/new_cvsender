@@ -29,7 +29,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
     15,
     20,
   ];
-  String _selectedRepeat = "None";
+  String _selectedRepeat = "Daily";
   List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
 
   int _selectedColor = 0;
