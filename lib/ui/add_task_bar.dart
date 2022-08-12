@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:new_cvsender/controller/task_controller.dart';
-import 'package:new_cvsender/models/task.dart';
-import 'package:new_cvsender/ui/theme.dart';
-import 'package:new_cvsender/ui/widget/button.dart';
-import 'package:new_cvsender/ui/widget/input_field.dart';
+import 'package:todo/controller/task_controller.dart';
+import 'package:todo/models/task.dart';
+import 'package:todo/ui/theme.dart';
+import 'package:todo/ui/widget/button.dart';
+import 'package:todo/ui/widget/input_field.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({Key? key}) : super(key: key);

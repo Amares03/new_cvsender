@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:new_cvsender/db/db_helper.dart';
-import 'package:new_cvsender/models/task.dart';
+import 'package:todo/db/db_helper.dart';
+import 'package:todo/models/task.dart';
 
 class TaskController extends GetxController {
   @override

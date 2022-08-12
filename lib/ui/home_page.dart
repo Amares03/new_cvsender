@@ -4,15 +4,15 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:new_cvsender/controller/task_controller.dart';
-import 'package:new_cvsender/models/task.dart';
-import 'package:new_cvsender/services/notification_services.dart';
-import 'package:new_cvsender/services/theme_sevices.dart';
-import 'package:new_cvsender/ui/add_task_bar.dart';
-import 'package:new_cvsender/ui/theme.dart';
-import 'package:new_cvsender/ui/widget/bottom_sheet_button.dart';
-import 'package:new_cvsender/ui/widget/button.dart';
-import 'package:new_cvsender/ui/widget/task_tile.dart';
+import 'package:todo/controller/task_controller.dart';
+import 'package:todo/models/task.dart';
+import 'package:todo/services/notification_services.dart';
+import 'package:todo/services/theme_sevices.dart';
+import 'package:todo/ui/add_task_bar.dart';
+import 'package:todo/ui/theme.dart';
+import 'package:todo/ui/widget/bottom_sheet_button.dart';
+import 'package:todo/ui/widget/button.dart';
+import 'package:todo/ui/widget/task_tile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

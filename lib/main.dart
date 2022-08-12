@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:new_cvsender/db/db_helper.dart';
-import 'package:new_cvsender/services/theme_sevices.dart';
-import 'package:new_cvsender/ui/home_page.dart';
-import 'package:new_cvsender/ui/theme.dart';
+import 'package:todo/db/db_helper.dart';
+import 'package:todo/services/theme_sevices.dart';
+import 'package:todo/ui/home_page.dart';
+import 'package:todo/ui/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

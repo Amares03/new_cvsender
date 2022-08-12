@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:new_cvsender/ui/theme.dart';
+import 'package:todo/ui/theme.dart';
 
 class NotifiedPage extends StatelessWidget {
   final String? lable;

@@ -1,4 +1,4 @@
-import 'package:new_cvsender/models/task.dart';
+import 'package:todo/models/task.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBHelper {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_cvsender/ui/theme.dart';
+import 'package:todo/ui/theme.dart';
 
 class MyButton extends StatelessWidget {
   final String lable;

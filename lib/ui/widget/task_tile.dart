@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:new_cvsender/ui/theme.dart';
+import 'package:todo/ui/theme.dart';
 
 import '../../models/task.dart';
 

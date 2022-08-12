@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:get/get.dart';
-import 'package:new_cvsender/ui/theme.dart';
+import 'package:todo/ui/theme.dart';
 
 class BottomSheetButton extends StatelessWidget {
   final VoidCallback onTap;
